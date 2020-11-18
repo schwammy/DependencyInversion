@@ -2,12 +2,26 @@
 
 namespace DependencyInversion.ApplicationLogic
 {
-    public class MembershipService
+    public interface IMembershipService
+    {
+        void Join(string userName, string password);
+    }
+
+    public class MembershipService : IMembershipService
     {
         private readonly IMembershipValidator _validator;
         private readonly IMembershipDataService _membership;
         private readonly IMessageFormatter _formatter;
         private readonly INotifier _notifier;
+
+        public MembershipService(IMembershipValidator validator, IMembershipDataService membership, IMembershipDataService membership2, IMembershipDataService membership3, IMessageFormatter formatter, INotifier notifier)
+        {
+            _validator = validator;
+            _membership = membership;
+            _formatter = formatter;
+            _notifier = notifier;
+        }
+
 
         public void Join(string userName, string password)
         {
